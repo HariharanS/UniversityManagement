@@ -1,9 +1,13 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityManagement.API", "UniversityManagement\UniversityManagement.API.csproj", "{249C2E8C-5692-491C-9B58-DAD26A78438D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityManagement.Application", "UniversityManagement.Application\UniversityManagement.Application.csproj", "{FF426922-D02A-41DD-959B-0DDDE5B0B907}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityManagement.Domain", "UniversityManagement.Domain\UniversityManagement.Domain.csproj", "{384DEFAA-44A4-44DB-B576-DEA13BB36CF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityManagement.Infrastructure", "UniversityManagement.Infrastructure\UniversityManagement.Infrastructure.csproj", "{F2A5E6CA-AAC3-48A0-98D6-0E949933B298}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,5 +23,13 @@ Global
 		{FF426922-D02A-41DD-959B-0DDDE5B0B907}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF426922-D02A-41DD-959B-0DDDE5B0B907}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF426922-D02A-41DD-959B-0DDDE5B0B907}.Release|Any CPU.Build.0 = Release|Any CPU
+		{384DEFAA-44A4-44DB-B576-DEA13BB36CF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{384DEFAA-44A4-44DB-B576-DEA13BB36CF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{384DEFAA-44A4-44DB-B576-DEA13BB36CF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{384DEFAA-44A4-44DB-B576-DEA13BB36CF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2A5E6CA-AAC3-48A0-98D6-0E949933B298}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2A5E6CA-AAC3-48A0-98D6-0E949933B298}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2A5E6CA-AAC3-48A0-98D6-0E949933B298}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2A5E6CA-AAC3-48A0-98D6-0E949933B298}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
