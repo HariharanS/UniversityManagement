@@ -25,7 +25,9 @@ namespace UniversityManagement.API
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddMvc();
-
+			// ef
+			//services.AddDbContext<UniversityManagementContext>();
+			// Configure swagger
 			services.AddSwaggerGen(x => x.SwaggerDoc("v1", new Info { Title = "University Management API", Version = "v1" }));
 		}
 
@@ -36,8 +38,12 @@ namespace UniversityManagement.API
 			{
 				app.UseDeveloperExceptionPage();
 			}
+			// log to console
             loggerFactory.AddConsole();
 			app.UseMvc();
+			
+			// use ef core
+			// use swagger
 			app.UseSwagger();
 			app.UseSwaggerUI(x => x.SwaggerEndpoint("/swagger/v1/swagger.json", "University Management API v1"));
 		}
