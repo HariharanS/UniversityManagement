@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 
 namespace UniversityManagement.Domain.Entities
 {
@@ -9,23 +10,23 @@ namespace UniversityManagement.Domain.Entities
         public DateTime StartTime { get; set; }
         // in mins
         public int Duration { get; set; }
+        // lecture theatre - child
+        public int LectureTheatreId { get; set; }
         public LectureTheatre LectureTheatre { get; set; }
-        public virtual Subject Subject { get; set; }
+        // subject - parent entity
+        public int SubjectId { get; set; }
+        public Subject Subject { get; set; }
 
-        public static Lecture Create(string name, DayOfWeek dayOfWeek, int duration, DateTime startTime, string theatreName, int theatreCapacity, Subject subject)
+        public static Lecture Create(Subject subject,LectureTheatre lectureTheatre,string name, DayOfWeek dayOfWeek, DateTime startTime, int duration)
         {
             var lecture = new Lecture
             {
                 Name = name, 
                 DayOfWeek = dayOfWeek,
                 Duration = duration, 
-                StartTime = startTime, 
-                LectureTheatre = new LectureTheatre
-                {
-                    Name = theatreName,
-                    Capacity = theatreCapacity
-                },
-                Subject = subject,
+                StartTime = startTime,
+                LectureTheatre = lectureTheatre,
+                SubjectId = subject.Id,
             };
 
             return lecture;

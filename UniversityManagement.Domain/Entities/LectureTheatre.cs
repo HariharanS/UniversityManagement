@@ -4,6 +4,18 @@
     {
         public string Name { get; set; }
         public int Capacity { get; set; }
-        public virtual Lecture Lecture { get; set; }
+        // Lecture - parent entity
+        public int LectureId { get; set; }
+        public Lecture Lecture { get; set; }
+
+        public LectureTheatre Create(string name,int capacity)
+        {
+            var lectureTheatre = new LectureTheatre
+            {
+                Name = name,
+                Capacity = capacity
+            };
+            return lectureTheatre;
+        }
     }
 }

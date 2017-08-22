@@ -8,7 +8,7 @@ namespace UniversityManagement.Application.AutoMapper
     {
         public ApplicationToDomain()
         {
-            CreateMap<SubjectModel, Student>().;
+            CreateMap<SubjectModel, Student>();
         }
     }
 }
