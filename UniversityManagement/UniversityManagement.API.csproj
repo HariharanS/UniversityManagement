@@ -19,5 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UniversityManagement.Application\UniversityManagement.Application.csproj" />
+    <ProjectReference Include="..\UniversityManagement.Infrastructure\UniversityManagement.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@ namespace UniversityManagement.Application.Interfaces
 {
     public interface IStudentService : IBaseService<StudentModel>
     {
+        void Enrol(int studentId, int lectureId);
         
     }
 }

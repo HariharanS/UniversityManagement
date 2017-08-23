@@ -9,6 +9,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
+using UniversityManagement.Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
+using UniversityManagement.Application.Interfaces;
+using UniversityManagement.Application.Services;
 
 namespace UniversityManagement.API
 {
@@ -26,9 +30,13 @@ namespace UniversityManagement.API
 		{
 			services.AddMvc();
 			// ef
-			//services.AddDbContext<UniversityManagementContext>();
+            services.AddDbContext<UniversityManagementContext>(x=> x.UseInMemoryDatabase("University"));
 			// Configure swagger
 			services.AddSwaggerGen(x => x.SwaggerDoc("v1", new Info { Title = "University Management API", Version = "v1" }));
+            // configure services
+            services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<ISubjectService, SubjectService>();
+            services.AddScoped<ILectureTheatreService,LectureTheatreService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

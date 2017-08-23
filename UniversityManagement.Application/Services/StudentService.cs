@@ -16,6 +16,16 @@ namespace UniversityManagement.Application.Services
         {
             throw new NotImplementedException();
         }
+        /// <summary>
+        /// Enrol the specified studentId and lectureId.
+        /// </summary>
+        /// <returns>The enrol.</returns>
+        /// <param name="studentId">Student identifier.</param>
+        /// <param name="lectureId">Lecture identifier.</param>
+        public void Enrol(int studentId, int lectureId)
+        {
+            throw new NotImplementedException();
+        }
 
         public Task<IList<StudentModel>> GetAll()
         {

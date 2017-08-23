@@ -6,23 +6,23 @@ using UniversityManagement.Application.Models;
 
 namespace UniversityManagement.Application.Services
 {
-    public class SubjectService : ISubjectService
+    public class LectureTheatreService : ILectureTheatreService
     {
-        public SubjectService()
+        public LectureTheatreService()
         {
         }
 
-        public Task<SubjectModel> Create(SubjectModel student)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IList<SubjectModel>> GetAll()
+        public Task<LectureTheatreModel> Create(LectureTheatreModel student)
         {
             throw new NotImplementedException();
         }
 
-        public Task<SubjectModel> GetById(int id)
+        public Task<IList<LectureTheatreModel>> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<LectureTheatreModel> GetById(int id)
         {
             throw new NotImplementedException();
         }

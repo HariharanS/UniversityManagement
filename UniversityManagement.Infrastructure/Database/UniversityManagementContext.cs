@@ -36,21 +36,44 @@ namespace UniversityManagement.Infrastructure.Database
         
         void ConfigureSubject(EntityTypeBuilder<Subject> builder)
         {
-            
+            builder
+                .ToTable("Subject")
+                .HasKey(x=> x.Id);
+
+            builder
+                .HasMany(x=> x.Lectures)
+                .WithOne(y=> y.Subject);
         }
         
         void ConfigureLecture(EntityTypeBuilder<Lecture> builder)
         {
-            
+            builder
+                .ToTable("Lecture")
+                .HasKey(x => x.Id);
+
+            builder
+                .HasOne(x => x.Subject)
+                .WithMany(y => y.Lectures);
         }
         
         void ConfigureLectureTheatre(EntityTypeBuilder<LectureTheatre> builder)
         {
-            
+            builder
+                .ToTable("LectureTheatre")
+                .HasKey(x=>x.Id);
+            builder
+                .HasOne(x => x.Lecture)
+                .WithOne(y => y.LectureTheatre);
         }
         
         void ConfigureEnrolment(EntityTypeBuilder<Enrolment> builder)
         {
+            builder
+                .ToTable("Enrolment")
+                .HasKey(x=> x.Id);
+            builder
+                .HasOne(x=>x.Student)
+                .WithMany(y=> y.Enrolments);
             
         }
         
