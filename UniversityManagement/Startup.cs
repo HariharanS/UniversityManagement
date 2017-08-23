@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
+using UniversityManagement.Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace UniversityManagement.API
 {
@@ -26,7 +28,7 @@ namespace UniversityManagement.API
 		{
 			services.AddMvc();
 			// ef
-			//services.AddDbContext<UniversityManagementContext>();
+			services.AddDbContext<UniversityManagementContext>(opt=> opt.UseInMemoryDatabase());
 			// Configure swagger
 			services.AddSwaggerGen(x => x.SwaggerDoc("v1", new Info { Title = "University Management API", Version = "v1" }));
 		}
