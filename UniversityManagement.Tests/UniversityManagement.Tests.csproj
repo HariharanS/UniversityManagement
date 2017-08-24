@@ -8,8 +8,10 @@
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UniversityManagement\UniversityManagement.API.csproj" />
+    <ProjectReference Include="..\UniversityManagement.Application\UniversityManagement.Application.csproj" />
   </ItemGroup>
 </Project>

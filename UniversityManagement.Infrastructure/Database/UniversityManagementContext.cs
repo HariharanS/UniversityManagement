@@ -25,11 +25,11 @@ namespace UniversityManagement.Infrastructure.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Student>();
-            modelBuilder.Entity<Subject>();
-            modelBuilder.Entity<Lecture>();
-            modelBuilder.Entity<LectureTheatre>();
-            modelBuilder.Entity<Enrolment>();
+            modelBuilder.Entity<Student>(ConfigureStudent);
+            modelBuilder.Entity<Subject>(ConfigureSubject);
+            modelBuilder.Entity<Lecture>(ConfigureLecture);
+            modelBuilder.Entity<LectureTheatre>(ConfigureLectureTheatre);
+            modelBuilder.Entity<Enrolment>(ConfigureEnrolment);
         }
 
         void ConfigureStudent(EntityTypeBuilder<Student> builder)
@@ -64,6 +64,11 @@ namespace UniversityManagement.Infrastructure.Database
             builder
                 .HasOne(x => x.Subject)
                 .WithMany(y => y.Lectures);
+
+			builder
+				.HasOne(x => x.LectureTheatre)
+				.WithOne(y => y.Lecture)
+				.HasForeignKey<LectureTheatre>(p => p.LectureId);
         }
         
         void ConfigureLectureTheatre(EntityTypeBuilder<LectureTheatre> builder)
@@ -71,9 +76,12 @@ namespace UniversityManagement.Infrastructure.Database
             builder
                 .ToTable("LectureTheatre")
                 .HasKey(x=>x.Id);
+            /*
             builder
                 .HasOne(x => x.Lecture)
-                .WithOne(y => y.LectureTheatre);
+                .WithOne(y => y.LectureTheatre)
+                .HasForeignKey<Lecture>(f => f.LectureTheatreId);
+             */
         }
         
         void ConfigureEnrolment(EntityTypeBuilder<Enrolment> builder)

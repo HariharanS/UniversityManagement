@@ -11,8 +11,10 @@ using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using UniversityManagement.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
+using UniversityManagement.Application.AutoMapper;
 using UniversityManagement.Application.Interfaces;
 using UniversityManagement.Application.Services;
+using UniversityManagement.Domain.Interfaces;
 
 namespace UniversityManagement.API
 {
@@ -35,7 +37,7 @@ namespace UniversityManagement.API
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddMvc();
+			
 			// ef
             services.AddDbContext<UniversityManagementContext>(x=> x.UseInMemoryDatabase("University"));
 			// Configure swagger
@@ -44,6 +46,17 @@ namespace UniversityManagement.API
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<ISubjectService, SubjectService>();
             services.AddScoped<ILectureTheatreService,LectureTheatreService>();
+
+            services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
+			
+			// configure automapper
+
+			var mapperConfiguration = new AutoMapperConfiuguration();
+			var mapper = mapperConfiguration.CreateMapper();
+			services.AddSingleton(mapper);
+			
+			
+			services.AddMvc();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

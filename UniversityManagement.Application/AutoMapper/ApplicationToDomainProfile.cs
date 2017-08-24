@@ -11,6 +11,7 @@ namespace UniversityManagement.Application.AutoMapper
             CreateMap<LectureTheatreModel, LectureTheatre>().ReverseMap();
             CreateMap<LectureScheduleModel, Lecture>().ReverseMap();
             CreateMap<SubjectModel, Subject>().ReverseMap();
+            CreateMap<StudentModel,Student>().ReverseMap();
         }
     }
 }

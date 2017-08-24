@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Hosting;
 using Xunit;
 using Xunit.Abstractions;
 using UniversityManagement.API;
+using UniversityManagement.Application.Models;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace UniversityManagement.Tests
 {
@@ -13,10 +16,11 @@ namespace UniversityManagement.Tests
         private readonly ITestOutputHelper _testOutputHelper;
         private readonly TestServer _server;
         private readonly HttpClient _client;
+        const string ENVIRONMENT = "Development";
         public UniversityManagementTests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
-            _server = new TestServer(new WebHostBuilder().UseStartup<Startup>().UseEnvironment("Development"));
+            _server = new TestServer(new WebHostBuilder().UseStartup<Startup>().UseEnvironment(ENVIRONMENT));
             _client = _server.CreateClient();
         }
 
@@ -27,7 +31,7 @@ namespace UniversityManagement.Tests
         }
 
         [Fact]
-        public void IntegrationTest1()
+        public void GetStudentsTest()
         {
             var request = "/api/student";
 
@@ -37,5 +41,19 @@ namespace UniversityManagement.Tests
             _testOutputHelper.WriteLine(response.Result.Content.ReadAsStringAsync().Result.ToString());
 
         }
+
+		[Fact]
+		public void CreateStudentsTest()
+		{
+			var request = "/api/student";
+            var studentModel = new StudentModel { Name = "Hariharan" };
+            var serialisedStudentModel = JsonConvert.SerializeObject(studentModel);
+            var content = new StringContent(serialisedStudentModel, Encoding.Unicode, "application/json");
+            var response = _client.PostAsync(request,content);
+			var result = response.Result;
+			result.EnsureSuccessStatusCode();
+			_testOutputHelper.WriteLine(response.Result.Content.ReadAsStringAsync().Result.ToString());
+
+		}
     }
 }

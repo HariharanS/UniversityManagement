@@ -15,10 +15,11 @@ namespace UniversityManagement.API.Controllers
 
         // GET api/values
         [HttpGet]
-        public Task<IEnumerable<StudentModel>> Get()
+        public async Task<IEnumerable<StudentModel>> Get()
         {
-            //return new string[] { "value1", "value2" };
-            return _studentService.GetAll();
+            var studentModelResult = new StudentModel[] { new StudentModel { Name = "Jason" } };
+            return studentModelResult;
+            //return _studentService.GetAll();
         }
 
         // GET api/values/5
@@ -30,9 +31,10 @@ namespace UniversityManagement.API.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]StudentModel model)
+        public Task<StudentModel> Post([FromBody]StudentModel model)
         {
-            _studentService.Create(model);
+            var createResult = _studentService.Create(model);
+            return createResult;
         }
 
         // PUT api/values/5

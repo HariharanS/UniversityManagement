@@ -17,7 +17,7 @@ namespace UniversityManagement.Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<IList<SubjectModel>> GetAll()
+        public Task<IEnumerable<SubjectModel>> GetAll()
         {
             throw new NotImplementedException();
         }

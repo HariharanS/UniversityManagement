@@ -1,20 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using UniversityManagement.Application.Interfaces;
 using UniversityManagement.Application.Models;
+using UniversityManagement.Domain.Entities;
+using UniversityManagement.Domain.Interfaces;
 
 namespace UniversityManagement.Application.Services
 {
     public class StudentService : IStudentService
     {
-        public StudentService()
+        private readonly IRepository<Student> _studentRepository;
+        private readonly IMapper _mapper;
+        public StudentService(IRepository<Student> studentRepository,IMapper mapper)
         {
+            _studentRepository = studentRepository;
+            _mapper = mapper;
         }
 
-        public Task<StudentModel> Create(StudentModel student)
+        public async Task<StudentModel> Create(StudentModel studentModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+				var student = _mapper.Map<Student>(studentModel);
+				var studentResult = _studentRepository.Add(student);
+				//_studentRepository.SaveChanges();
+				var studentModelResult = _mapper.Map<StudentModel>(studentResult);
+				return studentModelResult;
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+            //return studentModel;
         }
         /// <summary>
         /// Enrol the specified studentId and lectureId.
