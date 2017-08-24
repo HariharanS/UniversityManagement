@@ -27,7 +27,7 @@ namespace UniversityManagement.Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<IList<StudentModel>> GetAll()
+        public Task<IEnumerable<StudentModel>> GetAll()
         {
             throw new NotImplementedException();
         }

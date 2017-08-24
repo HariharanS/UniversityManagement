@@ -18,9 +18,16 @@ namespace UniversityManagement.API
 {
     public class Startup
     {
-		public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
 		{
-			Configuration = configuration;
+            var configurationBuilder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json")
+                .AddEnvironmentVariables();
+
+            Configuration = configurationBuilder.Build();
+
 		}
 
 		public IConfiguration Configuration { get; }

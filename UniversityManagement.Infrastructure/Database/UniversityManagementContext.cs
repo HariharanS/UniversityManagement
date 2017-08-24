@@ -7,6 +7,16 @@ namespace UniversityManagement.Infrastructure.Database
 {
     public class UniversityManagementContext : DbContext
     {
+        /// <summary>
+        /// Initializes a new instance of the
+        /// <see cref="T:UniversityManagement.Infrastructure.Database.UniversityManagementContext"/> class.
+        /// </summary>
+        /// <param name="options">Options.</param>
+        public UniversityManagementContext(DbContextOptions<UniversityManagementContext> options) : base(options)
+        {
+            
+        }
+
         public DbSet<Student> Student { get; set; }
         public DbSet<Subject> Subject { get; set; }
         public DbSet<Lecture> Lecture { get; set; }

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using UniversityManagement.Application.Interfaces;
+using UniversityManagement.Application.Models;
 
 namespace UniversityManagement.API.Controllers
 {
@@ -13,28 +15,31 @@ namespace UniversityManagement.API.Controllers
 
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public Task<IEnumerable<StudentModel>> Get()
         {
-            return new string[] { "value1", "value2" };
+            //return new string[] { "value1", "value2" };
+            return _studentService.GetAll();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Task<StudentModel> Get(int id)
         {
-            return "value";
+            return _studentService.GetById(id);
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody]StudentModel model)
         {
+            _studentService.Create(model);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]StudentModel model)
         {
+            
         }
 
         // DELETE api/values/5

@@ -7,7 +7,7 @@ namespace UniversityManagement.Application.Interfaces
     public interface IBaseService<TModel> where TModel : class
     {
         Task<TModel> GetById(int id);
-		Task<IList<TModel>> GetAll();
+		Task<IEnumerable<TModel>> GetAll();
 		Task<TModel> Create(TModel student);
     }
 }
