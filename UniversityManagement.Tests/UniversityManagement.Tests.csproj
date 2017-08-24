@@ -14,4 +14,8 @@
     <ProjectReference Include="..\UniversityManagement\UniversityManagement.API.csproj" />
     <ProjectReference Include="..\UniversityManagement.Application\UniversityManagement.Application.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TestData\" />
+    <Folder Include="IntegrationTests\" />
+  </ItemGroup>
 </Project>

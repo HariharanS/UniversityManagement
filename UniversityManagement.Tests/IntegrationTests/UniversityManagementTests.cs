@@ -16,11 +16,11 @@ namespace UniversityManagement.Tests
         private readonly ITestOutputHelper _testOutputHelper;
         private readonly TestServer _server;
         private readonly HttpClient _client;
-        const string ENVIRONMENT = "Development";
+        private const string Environment = "Development";
         public UniversityManagementTests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
-            _server = new TestServer(new WebHostBuilder().UseStartup<Startup>().UseEnvironment(ENVIRONMENT));
+            _server = new TestServer(new WebHostBuilder().UseStartup<Startup>().UseEnvironment(Environment));
             _client = _server.CreateClient();
         }
 
@@ -33,7 +33,7 @@ namespace UniversityManagement.Tests
         [Fact]
         public void GetStudentsTest()
         {
-            var request = "/api/student";
+            const string request = "/api/student";
 
             var response =  _client.GetAsync(request);
             var result = response.Result;
@@ -45,7 +45,7 @@ namespace UniversityManagement.Tests
 		[Fact]
 		public void CreateStudentsTest()
 		{
-			var request = "/api/student";
+			const string request = "/api/student";
             var studentModel = new StudentModel { Name = "Hariharan" };
             var serialisedStudentModel = JsonConvert.SerializeObject(studentModel);
             var content = new StringContent(serialisedStudentModel, Encoding.Unicode, "application/json");
