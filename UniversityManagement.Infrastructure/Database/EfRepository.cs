@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using UniversityManagement.Domain.Entities;
@@ -6,10 +7,10 @@ using UniversityManagement.Domain.Interfaces;
 
 namespace UniversityManagement.Infrastructure.Database
 {
-    public class EFRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity 
+    public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity 
     {
         private readonly UniversityManagementContext _dbContext;
-        public EFRepository(UniversityManagementContext dbContext)
+        public EfRepository(UniversityManagementContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -33,7 +34,7 @@ namespace UniversityManagement.Infrastructure.Database
 
         public IEnumerable<TEntity> GetAll()
         {
-            return _dbContext.Set<TEntity>().ToList<TEntity>();
+            return _dbContext.Set<TEntity>().AsNoTracking().ToList();
         }
 
         public void Update(TEntity entity)
@@ -51,7 +52,7 @@ namespace UniversityManagement.Infrastructure.Database
 
         public int SaveChanges()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

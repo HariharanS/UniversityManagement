@@ -31,7 +31,7 @@ namespace UniversityManagement.Infrastructure.Database
             modelBuilder.Entity<Enrolment>(ConfigureEnrolment);
         }
 
-        void ConfigureStudent(EntityTypeBuilder<Student> builder)
+        private static void ConfigureStudent(EntityTypeBuilder<Student> builder)
         {
             builder
                 .ToTable("Student")
@@ -43,7 +43,7 @@ namespace UniversityManagement.Infrastructure.Database
                 .ForSqlServerUseSequenceHiLo("student_hilo");
         }
         
-        void ConfigureSubject(EntityTypeBuilder<Subject> builder)
+        private static void ConfigureSubject(EntityTypeBuilder<Subject> builder)
         {
             builder
                 .ToTable("Subject")
@@ -56,7 +56,7 @@ namespace UniversityManagement.Infrastructure.Database
                 .WithOne(y=> y.Subject);
         }
         
-        void ConfigureLecture(EntityTypeBuilder<Lecture> builder)
+        private static void ConfigureLecture(EntityTypeBuilder<Lecture> builder)
         {
             builder
                 .ToTable("Lecture")
@@ -73,7 +73,7 @@ namespace UniversityManagement.Infrastructure.Database
                 .HasForeignKey<LectureTheatre>(p => p.LectureId);
         }
         
-        void ConfigureLectureTheatre(EntityTypeBuilder<LectureTheatre> builder)
+        private static void ConfigureLectureTheatre(EntityTypeBuilder<LectureTheatre> builder)
         {
             builder
                 .ToTable("LectureTheatre")
@@ -87,7 +87,7 @@ namespace UniversityManagement.Infrastructure.Database
              */
         }
         
-        void ConfigureEnrolment(EntityTypeBuilder<Enrolment> builder)
+        private static void ConfigureEnrolment(EntityTypeBuilder<Enrolment> builder)
         {
             builder
                 .ToTable("Enrolment")

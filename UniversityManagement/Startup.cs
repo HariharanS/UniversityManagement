@@ -43,7 +43,7 @@ namespace UniversityManagement.API
             services.AddScoped<ISubjectService, SubjectService>();
             services.AddScoped<ILectureTheatreService,LectureTheatreService>();
 
-            services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 			
 			// configure automapper
 
