@@ -14,9 +14,9 @@ namespace UniversityManagement.Tests
         readonly ITestOutputHelper _testOutputHelper;
         readonly UniversityManagementSetupFixture _setupFixture;
         readonly HttpClient _client;
-        const string studentRequest = "/api/student";
-        const string lectureTheatreRequest = "/api/lecturetheatre";
-        const string subjectRequest = "/api/subject";
+        private const string StudentRequest = "/api/student";
+        private const string LectureTheatreRequest = "/api/lecturetheatre";
+        private const string SubjectRequest = "/api/subject";
         public UniversityManagementTests(ITestOutputHelper testOutputHelper, UniversityManagementSetupFixture setupFixture)
         {
             _testOutputHelper = testOutputHelper;
@@ -28,14 +28,14 @@ namespace UniversityManagement.Tests
         [Fact]
         public void GetStudentsTest()
         {
-            IEnumerable<StudentModel> studentsResult = GetStudents();
+            var studentsResult = GetStudents();
             Assert.Equal(4, studentsResult.Count());
             _testOutputHelper.WriteLine("Success");
         }
 
         IEnumerable<StudentModel> GetStudents()
         {
-            var response = _client.GetAsync(studentRequest);
+            var response = _client.GetAsync(StudentRequest);
             var result = response.Result;
             result.EnsureSuccessStatusCode();
             var studentsResult =
@@ -48,7 +48,7 @@ namespace UniversityManagement.Tests
         {
             var studentModel = new StudentModel { Name = "Hariharan" };
             var content = SerialiseObjectToJson(studentModel);
-            var response = _client.PostAsync(studentRequest, content);
+            var response = _client.PostAsync(StudentRequest, content);
             var result = response.Result;
             result.EnsureSuccessStatusCode();
 
