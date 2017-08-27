@@ -6,6 +6,7 @@ using Xunit.Abstractions;
 using UniversityManagement.Application.Models;
 using Newtonsoft.Json;
 using System.Text;
+using UniversityManagement.Tests.TestHelpers;
 
 namespace UniversityManagement.Tests
 {
@@ -26,7 +27,7 @@ namespace UniversityManagement.Tests
 
         #region Students Tests
 
-        [Fact]
+        [Fact,TestPriority(5)]
         public void GetStudentsTest()
         {
             var studentsResult = GetStudents();
@@ -44,7 +45,7 @@ namespace UniversityManagement.Tests
             return studentsResult;
         }
 
-        [Fact]
+        [Fact,TestPriority(6)]
         public void CreateStudentTest()
         {
             var studentModel = new StudentModel { Name = "Hariharan" };
@@ -66,14 +67,14 @@ namespace UniversityManagement.Tests
 
         #region Subjects Tests
 
-        [Fact]
+        [Fact,TestPriority(3)]
         public void GetSubjectsTest()
         {
             var subjects = GetSubjects();
             Assert.Equal(5,subjects.Count());
         }
 
-        [Fact]
+        [Fact,TestPriority(4)]
         public void CreateSubjectTest()
         {
             var subjectModel = new SubjectModel() { Code = "SUBJ6", Title = "Subject6" };
@@ -94,9 +95,50 @@ namespace UniversityManagement.Tests
             var response = _client.GetAsync(SubjectRequest);
             var result = response.Result;
             result.EnsureSuccessStatusCode();
-            var subjectsResult = JsonConvert.DeserializeObject<IEnumerable<SubjectModel>>(response.Result.Content.ReadAsStringAsync().Result);
+            var subjectsResult = JsonConvert.DeserializeObject<IEnumerable<SubjectModel>>(result.Content.ReadAsStringAsync().Result);
             return subjectsResult;
         }
+
+        #endregion
+
+        #region LectureTheatre Tests
+
+        [Fact,TestPriority(1)]
+        public void GetLectureTheatresTest()
+        {
+            var lectureTheatres = GetLectureTheatres();
+            Assert.Equal(3,lectureTheatres.Count());
+        }
+        
+        [Fact,TestPriority(2)]
+        public void CreateLectureTheareTest()
+        {
+            var lectureTheatreModel = new LectureTheatreModel() {Name = "Theatre4", Capacity = 5};
+            var content = SerialiseObjectToJson(lectureTheatreModel);
+            var response = _client.PostAsync(LectureTheatreRequest, content);
+            var result = response.Result;
+            result.EnsureSuccessStatusCode();
+            var lectureTheatreModelResult =
+                JsonConvert.DeserializeObject<LectureTheatreModel>(result.Content.ReadAsStringAsync().Result);
+            
+            Assert.NotEqual(0,lectureTheatreModelResult.Id);
+
+            var lectureTheatreModels = GetLectureTheatres();
+            Assert.Equal(4,lectureTheatreModels.Count());
+        }
+        
+        IEnumerable<LectureTheatreModel> GetLectureTheatres()
+        {
+            var response = _client.GetAsync(LectureTheatreRequest);
+            var result = response.Result;
+            result.EnsureSuccessStatusCode();
+            var lectureTheatresResult =
+                JsonConvert.DeserializeObject<IEnumerable<LectureTheatreModel>>(result.Content.ReadAsStringAsync()
+                    .Result);
+            return lectureTheatresResult;
+        }
+        
+        
 
         #endregion
 
