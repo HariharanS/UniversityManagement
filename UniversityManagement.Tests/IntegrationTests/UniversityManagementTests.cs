@@ -25,82 +25,6 @@ namespace UniversityManagement.Tests
             _client = setupFixture.TestHttpClient;
         }
 
-        #region Students Tests
-
-        [Fact,TestPriority(5)]
-        public void GetStudentsTest()
-        {
-            var studentsResult = GetStudents();
-            Assert.Equal(4, studentsResult.Count());
-            _testOutputHelper.WriteLine("Success");
-        }
-
-        IEnumerable<StudentModel> GetStudents()
-        {
-            var response = _client.GetAsync(StudentRequest);
-            var result = response.Result;
-            result.EnsureSuccessStatusCode();
-            var studentsResult =
-                JsonConvert.DeserializeObject<IEnumerable<StudentModel>>(response.Result.Content.ReadAsStringAsync().Result);
-            return studentsResult;
-        }
-
-        [Fact,TestPriority(6)]
-        public void CreateStudentTest()
-        {
-            var studentModel = new StudentModel { Name = "Hariharan" };
-            var content = SerialiseObjectToJson(studentModel);
-            var response = _client.PostAsync(StudentRequest, content);
-            var result = response.Result;
-            result.EnsureSuccessStatusCode();
-
-            var studentModelResult = JsonConvert.DeserializeObject<StudentModel>(result.Content.ReadAsStringAsync().Result);
-            Assert.NotEqual(0, studentModelResult.Id);
-            // ensure that new student entity is added to db
-            var studentsResult = GetStudents();
-            Assert.Equal(5, studentsResult.Count());
-            _testOutputHelper.WriteLine("Success");
-
-        }
-
-        #endregion
-
-        #region Subjects Tests
-
-        [Fact,TestPriority(3)]
-        public void GetSubjectsTest()
-        {
-            var subjects = GetSubjects();
-            Assert.Equal(5,subjects.Count());
-        }
-
-        [Fact,TestPriority(4)]
-        public void CreateSubjectTest()
-        {
-            var subjectModel = new SubjectModel() { Code = "SUBJ6", Title = "Subject6" };
-            var content = SerialiseObjectToJson(subjectModel);
-            var response = _client.PostAsync(SubjectRequest, content);
-            var result = response.Result;
-            result.EnsureSuccessStatusCode();
-
-            var subjectModelResult = JsonConvert.DeserializeObject<SubjectModel>(result.Content.ReadAsStringAsync().Result);
-
-            Assert.NotEqual(0,subjectModelResult.Id);
-            var subjectsResult = GetSubjects();
-            Assert.Equal(6,subjectsResult.Count());
-        }
-
-        IEnumerable<SubjectModel> GetSubjects()
-        {
-            var response = _client.GetAsync(SubjectRequest);
-            var result = response.Result;
-            result.EnsureSuccessStatusCode();
-            var subjectsResult = JsonConvert.DeserializeObject<IEnumerable<SubjectModel>>(result.Content.ReadAsStringAsync().Result);
-            return subjectsResult;
-        }
-
-        #endregion
-
         #region LectureTheatre Tests
 
         [Fact,TestPriority(1)]
@@ -141,7 +65,83 @@ namespace UniversityManagement.Tests
         
 
         #endregion
+        
+        #region Students Tests
 
+        [Fact,TestPriority(5)]
+        public void GetStudentsTest()
+        {
+            var studentsResult = GetStudents();
+            Assert.Equal(4, studentsResult.Count());
+            _testOutputHelper.WriteLine("Success");
+        }
+
+        IEnumerable<StudentModel> GetStudents()
+        {
+            var response = _client.GetAsync(StudentRequest);
+            var result = response.Result;
+            result.EnsureSuccessStatusCode();
+            var studentsResult =
+                JsonConvert.DeserializeObject<IEnumerable<StudentModel>>(response.Result.Content.ReadAsStringAsync().Result);
+            return studentsResult;
+        }
+
+        [Fact,TestPriority(6)]
+        public void CreateStudentTest()
+        {
+            var studentModel = new StudentModel { Name = "Hariharan" };
+            var content = SerialiseObjectToJson(studentModel);
+            var response = _client.PostAsync(StudentRequest, content);
+            var result = response.Result;
+            result.EnsureSuccessStatusCode();
+
+            var studentModelResult = JsonConvert.DeserializeObject<StudentModel>(result.Content.ReadAsStringAsync().Result);
+            Assert.NotEqual(0, studentModelResult.Id);
+            // ensure that new student entity is added to db
+            var studentsResult = GetStudents();
+            Assert.Equal(5, studentsResult.Count());
+            _testOutputHelper.WriteLine("Success");
+
+        }
+
+        #endregion
+        
+        #region Subjects Tests
+
+        [Fact,TestPriority(3)]
+        public void GetSubjectsTest()
+        {
+            var subjects = GetSubjects();
+            Assert.Equal(5,subjects.Count());
+        }
+
+        [Fact,TestPriority(4)]
+        public void CreateSubjectTest()
+        {
+            var subjectModel = new SubjectModel() { Code = "SUBJ6", Title = "Subject6" };
+            var content = SerialiseObjectToJson(subjectModel);
+            var response = _client.PostAsync(SubjectRequest, content);
+            var result = response.Result;
+            result.EnsureSuccessStatusCode();
+
+            var subjectModelResult = JsonConvert.DeserializeObject<SubjectModel>(result.Content.ReadAsStringAsync().Result);
+
+            Assert.NotEqual(0,subjectModelResult.Id);
+            var subjectsResult = GetSubjects();
+            Assert.Equal(6,subjectsResult.Count());
+        }
+
+        IEnumerable<SubjectModel> GetSubjects()
+        {
+            var response = _client.GetAsync(SubjectRequest);
+            var result = response.Result;
+            result.EnsureSuccessStatusCode();
+            var subjectsResult = JsonConvert.DeserializeObject<IEnumerable<SubjectModel>>(result.Content.ReadAsStringAsync().Result);
+            return subjectsResult;
+        }
+
+        #endregion
+        
         #region Common
 
         private static StringContent SerialiseObjectToJson(object model)
