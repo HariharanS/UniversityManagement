@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using UniversityManagement.Application.Interfaces;
@@ -17,10 +18,8 @@ namespace UniversityManagement.API.Controllers
         [HttpGet]
         public async Task<IEnumerable<StudentModel>> Get()
         {
-            var studentModelResult = _studentService.GetAll();
-                //new StudentModel[] { new StudentModel { Name = "Jason" } };
-            return studentModelResult.Result;
-            //return _studentService.GetAll();
+            var modelResult = _studentService.GetAll();
+            return modelResult.Result;
         }
 
         // GET api/students/5
@@ -42,13 +41,14 @@ namespace UniversityManagement.API.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]StudentModel model)
         {
-            
+            throw new NotImplementedException();
         }
 
         // DELETE api/students/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            throw new NotImplementedException();
         }
     }
 }

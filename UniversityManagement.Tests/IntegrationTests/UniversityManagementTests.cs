@@ -11,22 +11,19 @@ namespace UniversityManagement.Tests
 {
     public class UniversityManagementTests : IClassFixture<UniversityManagementSetupFixture>
     {
-        private readonly ITestOutputHelper _testOutputHelper;
-        private readonly UniversityManagementSetupFixture _setupFixture;
-        private readonly HttpClient _client;
-        private const string studentRequest = "/api/student";
-        public UniversityManagementTests(ITestOutputHelper testOutputHelper,UniversityManagementSetupFixture setupFixture)
+        readonly ITestOutputHelper _testOutputHelper;
+        readonly UniversityManagementSetupFixture _setupFixture;
+        readonly HttpClient _client;
+        const string studentRequest = "/api/student";
+        const string lectureTheatreRequest = "/api/lecturetheatre";
+        const string subjectRequest = "/api/subject";
+        public UniversityManagementTests(ITestOutputHelper testOutputHelper, UniversityManagementSetupFixture setupFixture)
         {
             _testOutputHelper = testOutputHelper;
             _setupFixture = setupFixture;
             _client = setupFixture.TestHttpClient;
         }
 
-        ~UniversityManagementTests()
-        {
-            
-        }
-	    
 
         [Fact]
         public void GetStudentsTest()
@@ -36,7 +33,7 @@ namespace UniversityManagement.Tests
             _testOutputHelper.WriteLine("Success");
         }
 
-        private IEnumerable<StudentModel> GetStudents()
+        IEnumerable<StudentModel> GetStudents()
         {
             var response = _client.GetAsync(studentRequest);
             var result = response.Result;
@@ -47,7 +44,7 @@ namespace UniversityManagement.Tests
         }
 
         [Fact]
-		public void CreateStudentsTest()
+        public void CreateStudentsTest()
         {
             var studentModel = new StudentModel { Name = "Hariharan" };
             var content = SerialiseObjectToJson(studentModel);
@@ -64,7 +61,7 @@ namespace UniversityManagement.Tests
 
         }
 
-        private static StringContent SerialiseObjectToJson(object studentModel)
+        static StringContent SerialiseObjectToJson(object studentModel)
         {
             var serialisedStudentModel = JsonConvert.SerializeObject(studentModel);
             var content = new StringContent(serialisedStudentModel, Encoding.Unicode, "application/json");
