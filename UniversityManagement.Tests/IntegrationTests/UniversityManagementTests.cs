@@ -13,71 +13,51 @@ using Newtonsoft.Json;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using UniversityManagement.Tests.TestData;
-using Microsoft.Extensions.DependencyInjection;
 using UniversityManagement.Infrastructure.Database;
 
 namespace UniversityManagement.Tests
 {
-    public class UniversityManagementTests
+    public class UniversityManagementTests : IClassFixture<UniversityManagementSetupFixture>
     {
         private readonly ITestOutputHelper _testOutputHelper;
-        private readonly TestServer _server;
+        private readonly UniversityManagementSetupFixture _setupFixture;
         private readonly HttpClient _client;
-	    private readonly UniversityManagementContext _dbContext;
-        private const string Environment = "Development";
-        public UniversityManagementTests(ITestOutputHelper testOutputHelper)
+        private const string studentRequest = "/api/student";
+        public UniversityManagementTests(ITestOutputHelper testOutputHelper,UniversityManagementSetupFixture setupFixture)
         {
             _testOutputHelper = testOutputHelper;
-            var webHostBuilder = new WebHostBuilder().UseStartup<Startup>().UseEnvironment(Environment);
-	        //var serviceCollection = new ServiceCollection();
-	        //serviceCollection.AddDbContext<UniversityManagementContext>(x => x.UseInMemoryDatabase("University"));
-	        webHostBuilder.ConfigureServices(collection => collection.AddDbContext<UniversityManagementContext>(x=> x.UseInMemoryDatabase("University")));
-	        
-            _server = new TestServer(webHostBuilder);
-            _client = _server.CreateClient();
-
-            _dbContext = _server.Host.Services.GetService<UniversityManagementContext>();
+            _setupFixture = setupFixture;
+            _client = setupFixture.TestHttpClient;
         }
 
         ~UniversityManagementTests()
         {
-            _client.Dispose();
-            _server.Dispose();
+            
         }
 	    
 
         [Fact]
         public void GetStudentsTest()
         {
-            SetUpData();
-            const string request = "/api/student";
-
-            var response = _client.GetAsync(request);
+            
+            var response = _client.GetAsync(studentRequest);
             var result = response.Result;
             result.EnsureSuccessStatusCode();
             var studentsResult =
                 JsonConvert.DeserializeObject<IEnumerable<StudentModel>>(response.Result.Content.ReadAsStringAsync().Result);
             Assert.Equal(4, studentsResult.Count());
             _testOutputHelper.WriteLine("Success");
-
         }
 
-        private void SetUpData()
-        {
-            var testData = new UniversityManagementTestData(_dbContext);
-            testData.AddStudentsToDb();
-            testData.AddLectureTheatresToDb();
-            testData.AddSubjectsToDb();
-        }
+
 
         [Fact]
 		public void CreateStudentsTest()
 		{
-			const string request = "/api/student";
-            var studentModel = new StudentModel { Name = "Hariharan" };
+			var studentModel = new StudentModel { Name = "Hariharan" };
             var serialisedStudentModel = JsonConvert.SerializeObject(studentModel);
             var content = new StringContent(serialisedStudentModel, Encoding.Unicode, "application/json");
-            var response = _client.PostAsync(request,content);
+            var response = _client.PostAsync(studentRequest,content);
 			var result = response.Result;
 			result.EnsureSuccessStatusCode();
 
