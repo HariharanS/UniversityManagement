@@ -11,15 +11,8 @@ namespace UniversityManagement.Tests.TestData
 
         public UniversityManagementTestData(UniversityManagementContext dbContext)
         {
-            /*
-            var dbContextOptionsBuilder = new DbContextOptionsBuilder<UniversityManagementContext>();
-            dbContextOptionsBuilder.UseInMemoryDatabase("University");
-            _dbContext = new UniversityManagementContext(dbContextOptionsBuilder.Options);
-            */
             _dbContext = dbContext;
         }
-
-        
 
         public void AddStudentsToDb()
         {

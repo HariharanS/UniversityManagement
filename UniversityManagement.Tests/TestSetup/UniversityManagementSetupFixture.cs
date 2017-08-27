@@ -10,6 +10,13 @@ using UniversityManagement.Tests.TestData;
 
 namespace UniversityManagement.Tests
 {
+	/// <summary>
+	/// Test setup
+	/// 1. In memory Test server - for integration tests
+	/// 2. In memory Db - University - instead of using a database
+	/// 3. Client - get the http client from server
+	/// 4. Setup test data
+	/// </summary>
     public class UniversityManagementSetupFixture : IDisposable
     {
 		private readonly TestServer _server;
@@ -18,28 +25,25 @@ namespace UniversityManagement.Tests
         private const string Environment = "Development";
         public UniversityManagementSetupFixture()
         {
+	        // web host builder
 			var webHostBuilder = new WebHostBuilder().UseStartup<Startup>().UseEnvironment(Environment);
-			//var serviceCollection = new ServiceCollection();
-			//serviceCollection.AddDbContext<UniversityManagementContext>(x => x.UseInMemoryDatabase("University"));
 			webHostBuilder.ConfigureServices(collection => collection.AddDbContext<UniversityManagementContext>(x => x.UseInMemoryDatabase("University")));
-
+			// create server using web host builder
 			_server = new TestServer(webHostBuilder);
+	        // get rest client
 			_client = _server.CreateClient();
-
+			
+	        // get ef context used in server
 			_dbContext = _server.Host.Services.GetService<UniversityManagementContext>();
+	        
+	        // setup initial test data
             SetUpData();
 
         }
 
-        public HttpClient TestHttpClient 
-        { 
-            get 
-            { 
-                return _client;
-            }
-        }
+        public HttpClient TestHttpClient => _client;
 
-		private void SetUpData()
+	    private void SetUpData()
 		{
 			var testData = new UniversityManagementTestData(_dbContext);
 			testData.AddStudentsToDb();

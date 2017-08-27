@@ -1,30 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using UniversityManagement.Application.Interfaces;
 using UniversityManagement.Application.Models;
+using UniversityManagement.Domain.Entities;
+using UniversityManagement.Domain.Interfaces;
 
 namespace UniversityManagement.Application.Services
 {
     public class LectureTheatreService : ILectureTheatreService
     {
-        public LectureTheatreService()
+        private readonly IRepository<LectureTheatre> _lectureTheatreRepository;
+        private readonly IMapper _mapper;
+        public LectureTheatreService(IRepository<LectureTheatre> lectureTheatreRepository,IMapper mapper)
         {
+            _lectureTheatreRepository = lectureTheatreRepository;
+            _mapper = mapper;
         }
 
-        public Task<LectureTheatreModel> Create(LectureTheatreModel student)
+        public async Task<LectureTheatreModel> Create(LectureTheatreModel lectureTheatreModel)
         {
-            throw new NotImplementedException();
+            var lectureTheature = _mapper.Map<LectureTheatre>(lectureTheatreModel);
+            var lectureTheatreResult = _lectureTheatreRepository.Add(lectureTheature);
+            var lectureTheatreModelResult = _mapper.Map<LectureTheatreModel>(lectureTheatreResult);
+
+            return lectureTheatreModelResult;
         }
 
-        public Task<IEnumerable<LectureTheatreModel>> GetAll()
+        public async Task<IEnumerable<LectureTheatreModel>> GetAll()
         {
-            throw new NotImplementedException();
+            var lectureTheatres = _lectureTheatreRepository.GetAll();
+            var lectureTheatreModels = _mapper.Map<IEnumerable<LectureTheatreModel>>(lectureTheatres);
+            return lectureTheatreModels;
         }
 
-        public Task<LectureTheatreModel> GetById(int id)
+        public async Task<LectureTheatreModel> GetById(int id)
         {
-            throw new NotImplementedException();
+            var lectureTheatre = _lectureTheatreRepository.GetById(id);
+            var lectureTheatreModel = _mapper.Map<LectureTheatreModel>(lectureTheatre);
+            return lectureTheatreModel;
         }
     }
 }
