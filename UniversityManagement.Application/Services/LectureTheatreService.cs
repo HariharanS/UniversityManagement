@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using UniversityManagement.Application.Interfaces;
 using UniversityManagement.Application.Models;
 using UniversityManagement.Domain.Entities;
-using UniversityManagement.Domain.Interfaces;
+using UniversityManagement.Infrastructure.Interfaces;
 
 namespace UniversityManagement.Application.Services
 {

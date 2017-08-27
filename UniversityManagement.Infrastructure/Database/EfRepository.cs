@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using UniversityManagement.Domain.Entities;
-using UniversityManagement.Domain.Interfaces;
+using UniversityManagement.Infrastructure.Interfaces;
 
 namespace UniversityManagement.Infrastructure.Database
 {
@@ -36,6 +36,19 @@ namespace UniversityManagement.Infrastructure.Database
         {
             return _dbContext.Set<TEntity>().AsNoTracking().ToList();
         }
+
+		public IEnumerable<TEntity> List(ISpecification<TEntity> spec)
+		{
+			var queryableResultWithIncludes = 
+                spec
+                .Includes
+				.Aggregate(_dbContext.Set<TEntity>()
+                .AsQueryable(),
+					(current, include) => current.Include(include));
+			return queryableResultWithIncludes
+							.Where(spec.Criteria)
+							.ToList();
+		}
 
         public void Update(TEntity entity)
         {

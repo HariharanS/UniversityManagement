@@ -36,6 +36,14 @@ namespace UniversityManagement.API.Controllers
             var createResult = _studentService.Create(model);
             return createResult;
         }
+        // POST api/student/3/lecture/2
+        [HttpPost("{id}/")]
+        [Route("/lecture/{lectureId}")]
+        public Task<EnrolmentModel> Post(int id,int lectureId)
+        {
+            var createResult = _studentService.Enrol(id, lectureId);
+            return createResult;
+        }
 
         // PUT api/students/5
         [HttpPut("{id}")]

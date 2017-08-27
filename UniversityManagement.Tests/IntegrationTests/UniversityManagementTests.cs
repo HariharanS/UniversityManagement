@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -131,6 +132,58 @@ namespace UniversityManagement.Tests
             Assert.Equal(6,subjectsResult.Count());
         }
 
+        [Fact]
+        public void CreateLectureTests()
+        {
+            var subjectId = 1;
+            var request = $"{SubjectRequest}/{subjectId}";
+            var lectureModel = CreateLectureTestData("Lecture 1", 45, DayOfWeek.Monday, "09:00 AM", 1);
+
+            var content = SerialiseObjectToJson(lectureModel);
+
+            var response = _client.PostAsync(request, content);
+            var result = response.Result;
+            result.EnsureSuccessStatusCode();
+            
+            var lectureModelResult  = JsonConvert.DeserializeObject<LectureModel>(result.Content.ReadAsStringAsync().Result);
+            
+            Assert.NotEqual(0,lectureModelResult.Id);
+            Assert.NotNull(lectureModelResult.SubjectModel);
+            Assert.NotNull(lectureModelResult.LectureTheatreModel);
+            /*
+            
+            var lectureModelList = new List<LectureModel>
+            {
+                CreateLectureTestData("Lecture 1", 45, DayOfWeek.Monday, "09:00 AM", 1),
+                CreateLectureTestData("Lecture 2", 45, DayOfWeek.Tuesday, "10:00 AM", 1),
+                CreateLectureTestData("Lecture 3", 45, DayOfWeek.Wednesday, "11:00 AM", 1),
+                CreateLectureTestData("Lecture 4", 45, DayOfWeek.Thursday, "01:00 PM", 1),
+                CreateLectureTestData("Lecture 5", 45, DayOfWeek.Friday, "03:00 PM", 1)
+            };
+            
+            
+            lectureModelList.ForEach(lectureModel =>
+            {
+                
+            }); 
+            
+            */
+        }
+
+        public LectureModel CreateLectureTestData(string name,int duration,DayOfWeek dayOfWeek,string startTime,int lectureTheatreModelId)
+        {
+            var lecture = new LectureModel()
+            {
+                Name = name,
+                Duration = duration,
+                DayOfWeek = dayOfWeek,
+                StartTime = startTime,
+                LectureTheatreModelId = lectureTheatreModelId
+            };
+
+            return lecture;
+        }
+        
         IEnumerable<SubjectModel> GetSubjects()
         {
             var response = _client.GetAsync(SubjectRequest);

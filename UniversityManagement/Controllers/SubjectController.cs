@@ -38,6 +38,15 @@ namespace UniversityManagement.API.Controllers
 			var createResult = _subjectService.Create(model);
 			return createResult;
 		}
+	    
+	    // POST api/subject/3/lecture
+	    [HttpPost("{id}")]
+	    [Route("/lecture")]
+	    public Task<LectureModel> Post(int id,[FromBody]LectureModel model)
+	    {
+		    var createResult = _subjectService.CreateLecture(id,model);
+		    return createResult;
+	    }
 
 		// PUT api/subject/5
 		[HttpPut("{id}")]

@@ -52,7 +52,13 @@ namespace UniversityManagement.API
 			services.AddSingleton(mapper);
 			
 			
-            services.AddMvc();
+            services
+                .AddMvc()
+                .AddJsonOptions(options => 
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    options.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.All;
+                });
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

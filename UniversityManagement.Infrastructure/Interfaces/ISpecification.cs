@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+
+namespace UniversityManagement.Infrastructure.Interfaces
+{
+	public interface ISpecification<T> where T : class
+	{
+		Expression<Func<T, bool>> Criteria { get; }
+		List<Expression<Func<T, object>>> Includes { get; }
+		void AddInclude(Expression<Func<T, object>> includeExpression);
+	}
+}
