@@ -19,5 +19,6 @@
   <ItemGroup>
     <Folder Include="TestData\" />
     <Folder Include="IntegrationTests\" />
+    <Folder Include="TestSetup\" />
   </ItemGroup>
 </Project>
