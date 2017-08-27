@@ -37,7 +37,7 @@ namespace UniversityManagement.Infrastructure.Database
             builder
                 .ToTable("Student")
                 .HasKey(x => x.Id);
-
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
             builder
                 .Property(x => x.Id)
@@ -50,6 +50,8 @@ namespace UniversityManagement.Infrastructure.Database
                 .ToTable("Subject")
                 .HasKey(x=> x.Id);
 
+            builder.Property(x=>x.Id).ValueGeneratedOnAdd();
+
             builder
                 .HasMany(x=> x.Lectures)
                 .WithOne(y=> y.Subject);
@@ -60,15 +62,16 @@ namespace UniversityManagement.Infrastructure.Database
             builder
                 .ToTable("Lecture")
                 .HasKey(x => x.Id);
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
             builder
                 .HasOne(x => x.Subject)
-                .WithMany(y => y.Lectures);
+                .WithMany(y => y.Lectures).IsRequired(false);
 
-			builder
-				.HasOne(x => x.LectureTheatre)
-				.WithOne(y => y.Lecture)
-				.HasForeignKey<LectureTheatre>(p => p.LectureId);
+            builder
+                .HasOne(x => x.LectureTheatre)
+                .WithOne(y => y.Lecture)
+                .HasForeignKey<LectureTheatre>(p => p.LectureId);
         }
         
         void ConfigureLectureTheatre(EntityTypeBuilder<LectureTheatre> builder)
@@ -76,6 +79,7 @@ namespace UniversityManagement.Infrastructure.Database
             builder
                 .ToTable("LectureTheatre")
                 .HasKey(x=>x.Id);
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
             /*
             builder
                 .HasOne(x => x.Lecture)
@@ -89,9 +93,10 @@ namespace UniversityManagement.Infrastructure.Database
             builder
                 .ToTable("Enrolment")
                 .HasKey(x=> x.Id);
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder
                 .HasOne(x=>x.Student)
-                .WithMany(y=> y.Enrolments);
+                .WithMany(y=> y.Enrolments).IsRequired(false);
             
         }
         

@@ -16,7 +16,7 @@ namespace UniversityManagement.Domain.Entities
             return subject;
         }
 
-        public void AddLectureSchedule(string name, DayOfWeek dayOfWeek, int duration, DateTime startTime, LectureTheatre lectureTheatre)
+        public void AddLectureSchedule(string name, DayOfWeek dayOfWeek, int duration, string startTime, LectureTheatre lectureTheatre)
         {
             var lecture = Lecture.Create(this,lectureTheatre,name, dayOfWeek, startTime, duration);
             Lectures.Add(lecture);

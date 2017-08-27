@@ -13,23 +13,24 @@ namespace UniversityManagement.API.Controllers
 
         public StudentController(IStudentService studentService) => _studentService = studentService;
 
-        // GET api/values
+        // GET api/students
         [HttpGet]
         public async Task<IEnumerable<StudentModel>> Get()
         {
-            var studentModelResult = new StudentModel[] { new StudentModel { Name = "Jason" } };
-            return studentModelResult;
+            var studentModelResult = _studentService.GetAll();
+                //new StudentModel[] { new StudentModel { Name = "Jason" } };
+            return studentModelResult.Result;
             //return _studentService.GetAll();
         }
 
-        // GET api/values/5
+        // GET api/students/5
         [HttpGet("{id}")]
         public Task<StudentModel> Get(int id)
         {
             return _studentService.GetById(id);
         }
 
-        // POST api/values
+        // POST api/students
         [HttpPost]
         public Task<StudentModel> Post([FromBody]StudentModel model)
         {
@@ -37,14 +38,14 @@ namespace UniversityManagement.API.Controllers
             return createResult;
         }
 
-        // PUT api/values/5
+        // PUT api/students/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]StudentModel model)
         {
             
         }
 
-        // DELETE api/values/5
+        // DELETE api/students/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

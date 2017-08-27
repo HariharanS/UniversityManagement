@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using UniversityManagement.Domain.Entities;
 using UniversityManagement.Domain.Interfaces;
@@ -30,9 +31,9 @@ namespace UniversityManagement.Infrastructure.Database
             return _dbContext.Set<TEntity>().SingleOrDefault(e => e.Id == id);
         }
 
-        public IQueryable<TEntity> GetAll()
+        public IEnumerable<TEntity> GetAll()
         {
-            return _dbContext.Set<TEntity>();
+            return _dbContext.Set<TEntity>().ToList<TEntity>();
         }
 
         public void Update(TEntity entity)

@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Runtime.InteropServices.ComTypes;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.AspNetCore.Hosting;
 using Xunit;
@@ -8,6 +11,10 @@ using UniversityManagement.API;
 using UniversityManagement.Application.Models;
 using Newtonsoft.Json;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
+using UniversityManagement.Tests.TestData;
+using Microsoft.Extensions.DependencyInjection;
+using UniversityManagement.Infrastructure.Database;
 
 namespace UniversityManagement.Tests
 {
@@ -16,12 +23,20 @@ namespace UniversityManagement.Tests
         private readonly ITestOutputHelper _testOutputHelper;
         private readonly TestServer _server;
         private readonly HttpClient _client;
+	    private readonly UniversityManagementContext _dbContext;
         private const string Environment = "Development";
         public UniversityManagementTests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
-            _server = new TestServer(new WebHostBuilder().UseStartup<Startup>().UseEnvironment(Environment));
+            var webHostBuilder = new WebHostBuilder().UseStartup<Startup>().UseEnvironment(Environment);
+	        //var serviceCollection = new ServiceCollection();
+	        //serviceCollection.AddDbContext<UniversityManagementContext>(x => x.UseInMemoryDatabase("University"));
+	        webHostBuilder.ConfigureServices(collection => collection.AddDbContext<UniversityManagementContext>(x=> x.UseInMemoryDatabase("University")));
+	        
+            _server = new TestServer(webHostBuilder);
             _client = _server.CreateClient();
+
+            _dbContext = _server.Host.Services.GetService<UniversityManagementContext>();
         }
 
         ~UniversityManagementTests()
@@ -29,20 +44,33 @@ namespace UniversityManagement.Tests
             _client.Dispose();
             _server.Dispose();
         }
+	    
 
         [Fact]
         public void GetStudentsTest()
         {
+            SetUpData();
             const string request = "/api/student";
 
-            var response =  _client.GetAsync(request);
+            var response = _client.GetAsync(request);
             var result = response.Result;
             result.EnsureSuccessStatusCode();
-            _testOutputHelper.WriteLine(response.Result.Content.ReadAsStringAsync().Result.ToString());
+            var studentsResult =
+                JsonConvert.DeserializeObject<IEnumerable<StudentModel>>(response.Result.Content.ReadAsStringAsync().Result);
+            Assert.Equal(4, studentsResult.Count());
+            _testOutputHelper.WriteLine("Success");
 
         }
 
-		[Fact]
+        private void SetUpData()
+        {
+            var testData = new UniversityManagementTestData(_dbContext);
+            testData.AddStudentsToDb();
+            testData.AddLectureTheatresToDb();
+            testData.AddSubjectsToDb();
+        }
+
+        [Fact]
 		public void CreateStudentsTest()
 		{
 			const string request = "/api/student";
@@ -52,7 +80,10 @@ namespace UniversityManagement.Tests
             var response = _client.PostAsync(request,content);
 			var result = response.Result;
 			result.EnsureSuccessStatusCode();
-			_testOutputHelper.WriteLine(response.Result.Content.ReadAsStringAsync().Result.ToString());
+
+			var studentModelResult = JsonConvert.DeserializeObject<StudentModel>(response.Result.Content.ReadAsStringAsync().Result);
+			Assert.NotEqual(0,studentModelResult.Id);
+			_testOutputHelper.WriteLine("Success");
 
 		}
     }

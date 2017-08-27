@@ -13,6 +13,8 @@
   <ItemGroup>
     <ProjectReference Include="..\UniversityManagement\UniversityManagement.API.csproj" />
     <ProjectReference Include="..\UniversityManagement.Application\UniversityManagement.Application.csproj" />
+    <ProjectReference Include="..\UniversityManagement.Domain\UniversityManagement.Domain.csproj" />
+    <ProjectReference Include="..\UniversityManagement.Infrastructure\UniversityManagement.Infrastructure.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TestData\" />

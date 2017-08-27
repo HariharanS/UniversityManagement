@@ -39,7 +39,8 @@ namespace UniversityManagement.API
 		{
 			
 			// ef
-            services.AddDbContext<UniversityManagementContext>(x=> x.UseInMemoryDatabase("University"));
+			if(EnvironmentName.Development != "Development")
+            	services.AddDbContext<UniversityManagementContext>(x=> x.UseInMemoryDatabase("University"));
 			// Configure swagger
 			services.AddSwaggerGen(x => x.SwaggerDoc("v1", new Info { Title = "University Management API", Version = "v1" }));
             // configure services
@@ -56,7 +57,7 @@ namespace UniversityManagement.API
 			services.AddSingleton(mapper);
 			
 			
-			services.AddMvc();
+            services.AddMvc();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

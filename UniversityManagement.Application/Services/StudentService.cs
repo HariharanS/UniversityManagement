@@ -25,7 +25,6 @@ namespace UniversityManagement.Application.Services
             {
 				var student = _mapper.Map<Student>(studentModel);
 				var studentResult = _studentRepository.Add(student);
-				//_studentRepository.SaveChanges();
 				var studentModelResult = _mapper.Map<StudentModel>(studentResult);
 				return studentModelResult;
             }
@@ -46,9 +45,12 @@ namespace UniversityManagement.Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<StudentModel>> GetAll()
+        public async Task<IEnumerable<StudentModel>> GetAll()
         {
-            throw new NotImplementedException();
+            var students = _studentRepository.GetAll();
+
+            var studentModels = _mapper.Map<IEnumerable<StudentModel>>(students);
+            return studentModels;
         }
 
         public Task<StudentModel> GetById(int id)
