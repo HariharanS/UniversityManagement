@@ -16,8 +16,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UniversityManagement.Domain\UniversityManagement.Domain.csproj">
-      <Project>{384DEFAA-44A4-44DB-B576-DEA13BB36CF1}</Project>
-      <Name>UniversityManagement.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Interfaces\ILectureTheatreRepository.cs" />
+    <Compile Remove="Interfaces\IStudentRepository.cs" />
+    <Compile Remove="Interfaces\ISubjectRepository.cs" />
   </ItemGroup>
 </Project>

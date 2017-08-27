@@ -6,6 +6,7 @@
     <Folder Include="Interfaces\" />
     <Folder Include="Models\" />
     <Folder Include="Services\" />
+    <Folder Include="Specifications\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.1.1" />
@@ -15,5 +16,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UniversityManagement.Domain\UniversityManagement.Domain.csproj" />
+    <ProjectReference Include="..\UniversityManagement.Infrastructure\UniversityManagement.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

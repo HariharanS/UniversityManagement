@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using UniversityManagement.Application.Interfaces;
+using UniversityManagement.Application.Models;
 
 namespace UniversityManagement.API.Controllers
 {
@@ -11,36 +14,49 @@ namespace UniversityManagement.API.Controllers
 
         public StudentController(IStudentService studentService) => _studentService = studentService;
 
-        // GET api/values
+        // GET api/students
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<StudentModel>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var modelResult = _studentService.GetAll();
+            return modelResult.Result;
         }
 
-        // GET api/values/5
+        // GET api/students/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Task<StudentModel> Get(int id)
         {
-            return "value";
+            return _studentService.GetById(id);
         }
 
-        // POST api/values
+        // POST api/students
         [HttpPost]
-        public void Post([FromBody]string value)
+        public Task<StudentModel> Post([FromBody]StudentModel model)
         {
+            var createResult = _studentService.Create(model);
+            return createResult;
+        }
+        // POST api/student/3/lecture/2
+        [HttpPost("{id}/")]
+        [Route("/lecture/{lectureId}")]
+        public Task<EnrolmentModel> Post(int id,int lectureId)
+        {
+            var createResult = _studentService.Enrol(id, lectureId);
+            return createResult;
         }
 
-        // PUT api/values/5
+        // PUT api/students/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]StudentModel model)
         {
+            throw new NotImplementedException();
         }
 
-        // DELETE api/values/5
+        // DELETE api/students/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            throw new NotImplementedException();
         }
     }
 }

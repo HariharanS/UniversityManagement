@@ -7,6 +7,6 @@ namespace UniversityManagement.Application.Models
     {
         public string Code { get; set; }
         public string Title { get; set; }
-        public List<LectureScheduleModel> LectureSchedules { get; set; }
+        public List<LectureModel> LectureSchedules { get; set; }
     }
 }
