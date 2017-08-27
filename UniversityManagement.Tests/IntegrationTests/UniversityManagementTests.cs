@@ -1,19 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Runtime.InteropServices.ComTypes;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.AspNetCore.Hosting;
 using Xunit;
 using Xunit.Abstractions;
-using UniversityManagement.API;
 using UniversityManagement.Application.Models;
 using Newtonsoft.Json;
 using System.Text;
-using Microsoft.EntityFrameworkCore;
-using UniversityManagement.Tests.TestData;
-using UniversityManagement.Infrastructure.Database;
 
 namespace UniversityManagement.Tests
 {
