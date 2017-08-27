@@ -39,32 +39,44 @@ namespace UniversityManagement.Tests
         [Fact]
         public void GetStudentsTest()
         {
-            
+            IEnumerable<StudentModel> studentsResult = GetStudents();
+            Assert.Equal(4, studentsResult.Count());
+            _testOutputHelper.WriteLine("Success");
+        }
+
+        private IEnumerable<StudentModel> GetStudents()
+        {
             var response = _client.GetAsync(studentRequest);
             var result = response.Result;
             result.EnsureSuccessStatusCode();
             var studentsResult =
                 JsonConvert.DeserializeObject<IEnumerable<StudentModel>>(response.Result.Content.ReadAsStringAsync().Result);
-            Assert.Equal(4, studentsResult.Count());
-            _testOutputHelper.WriteLine("Success");
+            return studentsResult;
         }
-
-
 
         [Fact]
 		public void CreateStudentsTest()
-		{
-			var studentModel = new StudentModel { Name = "Hariharan" };
+        {
+            var studentModel = new StudentModel { Name = "Hariharan" };
+            var content = SerialiseObjectToJson(studentModel);
+            var response = _client.PostAsync(studentRequest, content);
+            var result = response.Result;
+            result.EnsureSuccessStatusCode();
+
+            var studentModelResult = JsonConvert.DeserializeObject<StudentModel>(response.Result.Content.ReadAsStringAsync().Result);
+            Assert.NotEqual(0, studentModelResult.Id);
+            // ensure that new student entity is added to db
+            var studentsResult = GetStudents();
+            Assert.Equal(5, studentsResult.Count());
+            _testOutputHelper.WriteLine("Success");
+
+        }
+
+        private static StringContent SerialiseObjectToJson(object studentModel)
+        {
             var serialisedStudentModel = JsonConvert.SerializeObject(studentModel);
             var content = new StringContent(serialisedStudentModel, Encoding.Unicode, "application/json");
-            var response = _client.PostAsync(studentRequest,content);
-			var result = response.Result;
-			result.EnsureSuccessStatusCode();
-
-			var studentModelResult = JsonConvert.DeserializeObject<StudentModel>(response.Result.Content.ReadAsStringAsync().Result);
-			Assert.NotEqual(0,studentModelResult.Id);
-			_testOutputHelper.WriteLine("Success");
-
-		}
+            return content;
+        }
     }
 }
