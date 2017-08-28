@@ -15,12 +15,11 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UniversityManagement.Domain\UniversityManagement.Domain.csproj">
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Remove="Interfaces\ILectureTheatreRepository.cs" />
     <Compile Remove="Interfaces\IStudentRepository.cs" />
     <Compile Remove="Interfaces\ISubjectRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UniversityManagement.Domain\UniversityManagement.Domain.csproj" />
   </ItemGroup>
 </Project>

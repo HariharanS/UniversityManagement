@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace UniversityManagement.Domain.Entities
 {
     public class Student : BaseEntity
     {
+        public const int MaxLectureTimePerWeek = 10 * 60;
         public string Name { get; set; }
         public DateTime DateOfBirth { get; set; }
 
@@ -20,9 +22,17 @@ namespace UniversityManagement.Domain.Entities
             return student;
         }
 
-        public void Enroll(Lecture lecture)
+        public IEnumerable<IGrouping<int, LectureTimeWeek>> LectureTimePerWeek()
         {
-            //lecture.e
+            var lectureTimeWeeks = Enrolments
+                .Select(s => new LectureTimeWeek() {Duration = s.Lecture.Duration, Week = s.WeekOfYear}).ToList();
+            
+            var lectureTimePerWeeks = lectureTimeWeeks.GroupBy(w => w.Week);
+            return lectureTimePerWeeks;
         }
+        
+        
+
+        
     }
 }

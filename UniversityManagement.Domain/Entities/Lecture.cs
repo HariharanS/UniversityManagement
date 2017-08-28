@@ -10,6 +10,7 @@ namespace UniversityManagement.Domain.Entities
         public string StartTime { get; set; }
         // in mins
         public int Duration { get; set; }
+
         // lecture theatre - child
         public int LectureTheatreId { get; set; }
         public LectureTheatre LectureTheatre { get; set; }

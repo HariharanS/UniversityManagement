@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using UniversityManagement.Application.AutoMapper;
 using UniversityManagement.Application.Interfaces;
 using UniversityManagement.Application.Services;
-using UniversityManagement.Domain.Interfaces;
+ using UniversityManagement.Infrastructure.Interfaces;
 
 namespace UniversityManagement.API
 {

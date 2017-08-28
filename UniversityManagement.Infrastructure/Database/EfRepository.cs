@@ -36,6 +36,16 @@ namespace UniversityManagement.Infrastructure.Database
         {
             return _dbContext.Set<TEntity>().AsNoTracking().ToList();
         }
+	    
+	    /// <summary>
+	    /// It is bad to return a query
+	    /// but being done as a hack in the interest as time
+	    /// </summary>
+	    /// <returns></returns>
+	    public IQueryable<TEntity> Get()
+	    {
+		    return _dbContext.Set<TEntity>();
+	    }
 
 		public IEnumerable<TEntity> List(ISpecification<TEntity> spec)
 		{

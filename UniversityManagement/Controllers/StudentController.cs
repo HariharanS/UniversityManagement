@@ -10,7 +10,7 @@ namespace UniversityManagement.API.Controllers
     [Route("api/[controller]")]
     public class StudentController : Controller
     {
-        readonly IStudentService _studentService;
+        private readonly IStudentService _studentService;
 
         public StudentController(IStudentService studentService) => _studentService = studentService;
 
@@ -36,7 +36,10 @@ namespace UniversityManagement.API.Controllers
             var createResult = _studentService.Create(model);
             return createResult;
         }
+        
+        /*
         // POST api/student/3/lecture/2
+        
         [HttpPost("{id}/")]
         [Route("/lecture/{lectureId}")]
         public Task<EnrolmentModel> Post(int id,int lectureId)
@@ -44,7 +47,8 @@ namespace UniversityManagement.API.Controllers
             var createResult = _studentService.Enrol(id, lectureId);
             return createResult;
         }
-
+        */
+        
         // PUT api/students/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]StudentModel model)

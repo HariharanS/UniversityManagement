@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using UniversityManagement.Application.Interfaces;
 using UniversityManagement.Application.Models;
 using UniversityManagement.Domain.Entities;
@@ -38,18 +40,7 @@ namespace UniversityManagement.Application.Services
             }
             //return studentModel;
         }
-        /// <summary>
-        /// Enrol the specified studentId and lectureId.
-        /// </summary>
-        /// <returns>The enrol.</returns>
-        /// <param name="studentId">Student identifier.</param>
-        /// <param name="lectureId">Lecture identifier.</param>
-        public Task<EnrolmentModel> Enrol(int studentId, int lectureId)
-        {
-            var student = _studentRepository.GetById(studentId);
-            var lecture = _lectureRepository.GetById(lectureId);
-
-        }
+        
 
         public async Task<IEnumerable<StudentModel>> GetAll()
         {

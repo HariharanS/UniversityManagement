@@ -10,6 +10,7 @@ namespace UniversityManagement.Infrastructure.Interfaces
         TEntity Add(TEntity entity);
         TEntity GetById(int id);
         IEnumerable<TEntity> GetAll();
+        IQueryable<TEntity> Get();
         IEnumerable<TEntity> List(ISpecification<TEntity> spec);
         void Update(TEntity entity);
         void Remove(int id);

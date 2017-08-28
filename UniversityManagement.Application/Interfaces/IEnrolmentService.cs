@@ -3,7 +3,7 @@ using UniversityManagement.Application.Models;
 
 namespace UniversityManagement.Application.Interfaces
 {
-    public interface IEnrolmentService : IBaseService<StudentModel>
+    public interface IEnrolmentService : IBaseService<EnrolmentModel>
     {
         
     }

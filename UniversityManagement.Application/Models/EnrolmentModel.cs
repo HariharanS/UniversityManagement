@@ -1,4 +1,6 @@
-﻿namespace UniversityManagement.Application.Models
+﻿using System;
+
+namespace UniversityManagement.Application.Models
 {
     public class EnrolmentModel :ModelBase
     {
@@ -6,5 +8,6 @@
         public StudentModel StudentModel { get; set; }
         public int LectureModelId { get; set; }
         public LectureModel LectureModel { get; set; }
+        public DateTime EnroledDate { get; set; }
     }
 }
